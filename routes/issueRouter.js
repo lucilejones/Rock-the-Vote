@@ -4,14 +4,27 @@ const Issue = require('../models/issue.js')
 
 // get all issues
 issueRouter.get("/", (req, res, next) => {
-    Issue.find((err, issues) => {
-        if (err) {
-            res.status(500)
-            return next(err)
-        }
-        return res.status(200).send(issues)
-    })
+    Issue.find()
+        .populate("user")
+        .exec((err, issues) => {
+            if (err) {
+                res.status(500)
+                return next(err)
+            }
+            return res.status(200).send(issues)
+        })
 })
+
+// get all issues
+// issueRouter.get("/", (req, res, next) => {
+//     Issue.find((err, issues) => {
+//         if (err) {
+//             res.status(500)
+//             return next(err)
+//         }
+//         return res.status(200).send(issues)
+//     })
+// })
 
 // get issues by user id
 issueRouter.get("/user", (req, res, next) => {
