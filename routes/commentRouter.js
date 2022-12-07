@@ -15,7 +15,9 @@ commentRouter.get("/", (req, res, next) => {
 
 // get comments by issue
 commentRouter.get("/:issueId", (req, res, next) => {
-    Comment.find({issue: req.params.issueId}, (err, comments) => {
+    Comment.find({issue: req.params.issueId})
+    .populate("user")
+    .exec((err, comments) => {
         if(err){
             res.status(500)
             return next(err)
