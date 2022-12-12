@@ -87,6 +87,9 @@ issueRouter.put("/upvote/:issueId", (req, res, next) => {
     Issue.findByIdAndUpdate(
         { _id: req.params.issueId },
         { $addToSet: { upvotedBy: req.auth._id } },
+        // can put $pull: { downvotedBy: req.auth._id}
+        // if a user changes their mind and wants to upvote something they've downvoted,
+        // it won't go to zero, it'll go to one
         { new: true }
     )
         // .populate()
@@ -104,6 +107,7 @@ issueRouter.put("/downvote/:issueId", (req, res, next) => {
     Issue.findByIdAndUpdate(
         { _id: req.params.issueId },
         { $addToSet: { downvotedBy: req.auth._id } },
+        // can put $pull: { upvotedBy: req.auth._id }
         { new: true }
     )
         .exec((err, updatedIssue) => {
