@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Comment(props){
     const {text, user } = props
-    // console.log(user.username)
+    console.log(user.username)
     
 
     return (

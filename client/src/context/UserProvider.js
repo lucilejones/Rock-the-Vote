@@ -26,7 +26,7 @@ export default function UserProvider(props){
     const navigate = useNavigate()
 
     const [userState, setUserState] = useState(initState)
-    const [comments, setComments ] = useState([])
+    // const [comments, setComments ] = useState([])
 
     function signup(credentials){
         axios.post("/auth/signup", credentials)
@@ -134,13 +134,13 @@ export default function UserProvider(props){
             .catch(err => console.log(err.response.data.errMsg))
     }
 
-    function getCommentsByIssue(issueId){
-        userAxios.get(`/api/comment/${issueId}`)
-            .then(res => {
-                setComments(res.data)
-            })
-            .catch(err => console.log(err.respons.data.errMsg))
-    }
+    // function getCommentsByIssue(issueId){
+    //     userAxios.get(`/api/comment/${issueId}`)
+    //         .then(res => {
+    //             setComments(res.data)
+    //         })
+    //         .catch(err => console.log(err.respons.data.errMsg))
+    // }
 // maybe need to change this function and state to just be in the issue.js
 // so it doesn't update the comment state for all issues
 
@@ -157,8 +157,9 @@ export default function UserProvider(props){
                 getAllIssues,
                 upvoteIssue,
                 downvoteIssue,
-                getCommentsByIssue,
-                comments
+                userAxios
+                // getCommentsByIssue,
+                // comments
             }}
         >
             {props.children}
