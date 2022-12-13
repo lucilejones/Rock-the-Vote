@@ -16,7 +16,7 @@ commentRouter.get("/", (req, res, next) => {
 // get comments by issue
 commentRouter.get("/:issueId", (req, res, next) => {
     Comment.find({issue: req.params.issueId})
-    .populate("user")
+    .populate("commentedBy")
     .exec((err, comments) => {
         if(err){
             res.status(500)
@@ -28,7 +28,8 @@ commentRouter.get("/:issueId", (req, res, next) => {
 
 // add a new comment
 commentRouter.post("/:issueId", (req, res, next) => {
-    req.body.user = req.auth._id
+    req.body.commentedBy = req.auth._id
+    // changed from user to commentedBy
     req.body.issue = req.params.issueId
     const newComment = new Comment(req.body)
     newComment.save((err, savedComment) => {
@@ -44,6 +45,7 @@ commentRouter.post("/:issueId", (req, res, next) => {
 commentRouter.delete("/:commentId", (req, res, next) => {
     Comment.findOneAndDelete(
         {_id: req.params.commentId, user: req.auth._id},
+        // I think this stays as user, but if get errors change to commentedBy
         (err, deletedComment) => {
             if(err){
                 res.status(500)
@@ -58,6 +60,7 @@ commentRouter.delete("/:commentId", (req, res, next) => {
 commentRouter.put("/:commentId", (req, res, next) => {
     Comment.findOneAndUpdate(
         {_id: req.params.commentId, user: req.auth._id},
+        // I think this stays as user, but if get errors try commentedBy
         req.body,
         {new: true},
         (err, updatedComment) => {

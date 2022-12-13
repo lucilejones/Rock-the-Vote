@@ -10,7 +10,7 @@ const issueSchema = new Schema({
         type: String,
         required: true
     },
-    user: {
+    postedBy: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
