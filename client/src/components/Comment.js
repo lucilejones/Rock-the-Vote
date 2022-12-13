@@ -1,14 +1,14 @@
 import React from 'react'
 
 export default function Comment(props){
-    const {text, user } = props
-    console.log(user.username)
+    const {text, commentedBy } = props
+    // console.log(commentedBy.username)
     
 
     return (
         <div>
+            <p>{commentedBy.username}:</p>
             <p>{text}</p>
-            <p>posted by: {user.username}</p>
         </div>
     )
 }

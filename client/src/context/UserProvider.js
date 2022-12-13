@@ -13,22 +13,19 @@ userAxios.interceptors.request.use(config => {
 })
 
 
-export default function UserProvider(props){
+export default function UserProvider(props) {
     const initState = {
         user: JSON.parse(localStorage.getItem("user")) || {},
         token: localStorage.getItem("token") || "",
         issues: [],
         errMsg: ""
-        // do comments need to go in here?
-        // comments: []
     }
 
     const navigate = useNavigate()
 
     const [userState, setUserState] = useState(initState)
-    // const [comments, setComments ] = useState([])
 
-    function signup(credentials){
+    function signup(credentials) {
         axios.post("/auth/signup", credentials)
             .then(res => {
                 const { user, token } = res.data
@@ -43,7 +40,7 @@ export default function UserProvider(props){
             .catch(err => handleAuthErr(err.response.data.errMsg))
     }
 
-    function login(credentials){
+    function login(credentials) {
         axios.post("/auth/login", credentials)
             .then(res => {
                 const { user, token } = res.data
@@ -59,7 +56,7 @@ export default function UserProvider(props){
             .catch(err => handleAuthErr(err.response.data.errMsg))
     }
 
-    function logout(){
+    function logout() {
         localStorage.removeItem("token")
         localStorage.removeItem("user")
         setUserState({
@@ -69,21 +66,21 @@ export default function UserProvider(props){
         })
     }
 
-    function handleAuthErr(errMsg){
+    function handleAuthErr(errMsg) {
         setUserState(prevState => ({
             ...prevState,
             errMsg
         }))
     }
 
-    function resetAuthErr(){
+    function resetAuthErr() {
         setUserState(prevState => ({
             ...prevState,
             errMsg: ""
         }))
     }
 
-    function getUserIssues(){
+    function getUserIssues() {
         userAxios.get("/api/issue/user")
             .then(res => {
                 setUserState(prevState => ({
@@ -94,7 +91,7 @@ export default function UserProvider(props){
             .catch(err => console.log(err.response.data.errMsg))
     }
 
-    function getAllIssues(){
+    function getAllIssues() {
         userAxios.get("/api/issue")
             .then(res => {
                 setUserState(prevState => ({
@@ -105,17 +102,17 @@ export default function UserProvider(props){
             .catch(err => console.log(err.response.data.errMsg))
     }
 
-    function upvoteIssue(issueId){
+    function upvoteIssue(issueId) {
         userAxios.put(`/api/issue/upvote/${issueId}`)
             .then(res => console.log(res.data))
             .catch(err => console.log(err.response.data.errMsg))
         navigate("/public")
         getAllIssues()
     }
-// is there a way to change this to update the displayed isses with the res.data
-// instead of calling getAllIssues again?
+    // is there a way to change this to update the displayed isses with the res.data
+    // instead of calling getAllIssues again?
 
-    function downvoteIssue(issueId){
+    function downvoteIssue(issueId) {
         userAxios.put(`/api/issue/downvote/${issueId}`)
             .then(res => console.log(res.data))
             .catch(err => console.log(err.response.data.errMsg))
@@ -123,7 +120,8 @@ export default function UserProvider(props){
         getAllIssues()
     }
 
-    function addIssue(newIssue){
+    function addIssue(newIssue) {
+        // console.log(newIssue)
         userAxios.post("/api/issue", newIssue)
             .then(res => {
                 setUserState(prevState => ({
@@ -134,15 +132,15 @@ export default function UserProvider(props){
             .catch(err => console.log(err.response.data.errMsg))
     }
 
-    // function getCommentsByIssue(issueId){
-    //     userAxios.get(`/api/comment/${issueId}`)
-    //         .then(res => {
-    //             setComments(res.data)
-    //         })
-    //         .catch(err => console.log(err.respons.data.errMsg))
-    // }
-// maybe need to change this function and state to just be in the issue.js
-// so it doesn't update the comment state for all issues
+    function deleteIssue(issueId) {
+        userAxios.delete(`/api/issue/${issueId}`)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err.response.data.errMsg))
+        getUserIssues()
+    }
+// need to separate issues state out from the overall user state so can update
+// with something like issues.filter(issue => issue._id !== issueId)
+
 
     return (
         <UserContext.Provider
@@ -153,13 +151,12 @@ export default function UserProvider(props){
                 logout,
                 resetAuthErr,
                 addIssue,
+                deleteIssue,
                 getUserIssues,
                 getAllIssues,
                 upvoteIssue,
                 downvoteIssue,
                 userAxios
-                // getCommentsByIssue,
-                // comments
             }}
         >
             {props.children}
