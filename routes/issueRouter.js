@@ -6,7 +6,7 @@ const Comment = require('../models/comment.js')
 // get all issues
 issueRouter.get("/", (req, res, next) => {
     Issue.find()
-        .populate("postedBy")
+        .populate("postedBy", "username")
         .exec((err, issues) => {
             if (err) {
                 res.status(500)
