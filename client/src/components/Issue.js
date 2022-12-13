@@ -41,6 +41,12 @@ export default function Issue(props) {
     //     setComments(prevComments => [...prevComments, res.data])
     // })
 
+    function deleteComment(commentId){
+        userAxios.delete(`/api/comment/${commentId}`)
+            .then(res => setComments(prevComments => prevComments.filter(comment => comment._id !== commentId)))
+            .catch(err => console.log(err.response.data.errMsg))
+    }
+
     
     return (
         <div>
@@ -58,7 +64,7 @@ export default function Issue(props) {
                 _id={_id}
             />
             <button onClick={() => commentButton(_id)}>{commentToggle ? "Hide Comments" : "Show Comments"}</button>
-            {commentToggle && <CommentList comments={comments}/>}
+            {commentToggle && <CommentList comments={comments} deleteComment={deleteComment}/>}
         </div>
     )
 }

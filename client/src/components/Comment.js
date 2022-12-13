@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Comment(props){
-    const {text, commentedBy } = props
+    const {text, commentedBy, deleteComment, _id } = props
     // console.log(commentedBy.username)
     
 
@@ -9,6 +9,7 @@ export default function Comment(props){
         <div>
             <p>{commentedBy.username}:</p>
             <p>{text}</p>
+            <button onClick={() => deleteComment(_id)}>Delete</button>
         </div>
     )
 }
