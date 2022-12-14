@@ -4,6 +4,7 @@ import Navbar from './components/Navbar.js'
 import Auth from './components/Auth.js'
 import Profile from './components/Profile.js'
 import Public from './components/Public.js'
+import Footer from './components/Footer.js'
 import ProtectedRoute from './components/ProtectedRoute.js'
 import { UserContext } from './context/UserProvider.js'
 
@@ -11,7 +12,7 @@ export default function App() {
   const { token, logout } = useContext(UserContext)
 
   return (
-    <div>
+    <>
       {token && <Navbar logout={logout} />}
       <Routes>
         <Route
@@ -31,7 +32,8 @@ export default function App() {
           </ProtectedRoute>}
         />
       </Routes>
-    </div>
+      <Footer />
+    </>
   );
 }
 

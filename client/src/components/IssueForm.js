@@ -28,20 +28,21 @@ export default function IssueForm(props){
     return (
         <form onSubmit={handleSubmit}>
             <input
+                className='form-control my-2'
                 type="text"
                 name="title"
                 value={title}
                 onChange={handleChange}
                 placeholder="title"
             />
-            <input
-                type="text"
+            <textarea
+                className='form-control my-2'
                 name="description"
                 value={description}
                 onChange={handleChange}
                 placeholder="description"
             />
-            <button>Add Issue</button>
+            <button className='btn bg-white'>Add Issue</button>
         </form>
     )
 }

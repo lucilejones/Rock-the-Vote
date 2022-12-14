@@ -15,6 +15,7 @@ export default function AuthForm(props){
     return(
         <form onSubmit={handleSubmit}>
             <input
+                className='form-control my-2'
                 type="text"
                 value={username}
                 name="username"
@@ -22,13 +23,14 @@ export default function AuthForm(props){
                 placeholder="username"
             />
             <input
+                className='form-control my-2'
                 type="text"
                 value={password}
                 name="password"
                 onChange={handleChange}
                 placeholder="password"
             />
-            <button>{ btnText }</button>
+            <button className='btn bg-light'>{ btnText }</button>
             <p style={{color: "red"}}>{errMsg}</p>
         </form>
     )

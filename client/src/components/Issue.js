@@ -16,12 +16,12 @@ export default function Issue(props) {
 
     const totalVotes = upvotedBy.length - downvotedBy.length
 
-    function commentButton(_id){
+    function commentButton(_id) {
         getCommentsByIssue(_id)
         setCommentToggle(prevState => !prevState)
     }
 
-    function getCommentsByIssue(issueId){
+    function getCommentsByIssue(issueId) {
         userAxios.get(`/api/comment/${issueId}`)
             .then(res => {
                 setComments(res.data)
@@ -41,30 +41,32 @@ export default function Issue(props) {
     //     setComments(prevComments => [...prevComments, res.data])
     // })
 
-    function deleteComment(commentId){
+    function deleteComment(commentId) {
         userAxios.delete(`/api/comment/${commentId}`)
             .then(res => setComments(prevComments => prevComments.filter(comment => comment._id !== commentId)))
             .catch(err => console.log(err.response.data.errMsg))
     }
 
-    
+
     return (
-        <div>
-            <h1>{title}</h1>
-            <h3>{description}</h3>
+        <div className='issue'>
+            <p className='display-5'>{title}</p>
+            <p className='lead'>{description}</p>
             {postedBy.username && <p>posted by: {postedBy.username}</p>}
             <p> total votes: {totalVotes}</p>
-            <button onClick={() => upvoteIssue(_id)}>Upvote</button>
-            <button onClick={() => downvoteIssue(_id)}>Downvote</button>
-            <br />
-            {!postedBy.username && <button onClick={() => deleteIssue(_id)}>Delete Issue</button>}
-            <br />
-            <CommentForm 
+            <button onClick={() => upvoteIssue(_id)} className="btn btn-info btn-sm m-1">Upvote</button>
+            <button onClick={() => downvoteIssue(_id)} className="btn btn-info btn-sm m-1">Downvote</button>
+            {!postedBy.username && <button onClick={() => deleteIssue(_id)} className="btn btn-info btn-sm m-1">Delete</button>}
+            {/* <CommentForm 
                 addComment={addComment}
                 _id={_id}
-            />
-            <button onClick={() => commentButton(_id)}>{commentToggle ? "Hide Comments" : "Show Comments"}</button>
-            {commentToggle && <CommentList comments={comments} deleteComment={deleteComment}/>}
+            /> */}
+            <button onClick={() => commentButton(_id)} className="btn btn-info btn-sm m-1">{commentToggle ? "Hide Comments" : "Show Comments"}</button>
+            {commentToggle && <CommentForm
+                addComment={addComment}
+                _id={_id}
+            />}
+            {commentToggle && <CommentList comments={comments} deleteComment={deleteComment} />}
         </div>
     )
 }

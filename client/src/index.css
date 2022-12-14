@@ -1,0 +1,43 @@
+.main-title, .nav-background {
+    background-color: #17a2b8;
+}
+
+.background-main {
+    background-color: #17a2b8;
+    padding: 8px;
+}
+
+.background-main-image {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("https://source.unsplash.com/U9BmwpA--Xg");
+    height: 500px;
+    background-position: center;
+    background-size: cover;
+}
+
+.issue {
+    border: solid 1px #17a2b8;
+    border-radius: 5px;
+    padding: 8px;
+    margin: 20px;
+}
+
+
+@media (min-width: 576px) {
+    
+    }
+    
+    @media screen and (min-width: 768px) {
+        .main {
+            margin-top: 35px;
+        }
+    }
+    
+    @media (min-width: 992px) {
+        .issue {
+            margin: 45px;
+        }
+    }
+    
+    @media (min-width: 1200px) {
+        
+    }
