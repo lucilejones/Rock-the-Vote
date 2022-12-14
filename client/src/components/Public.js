@@ -12,7 +12,7 @@ export default function Public(){
 
     return (
         <div>
-            <h3>The full list of issues</h3>
+            <h2 className='text-center pt-3'>The full list of Rock the Vote issues</h2>
             <IssueList issues={issues}/>
         </div>
         

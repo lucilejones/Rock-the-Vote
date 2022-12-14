@@ -4,7 +4,7 @@ import IssueList from './IssueList.js'
 // import Issue from './Issue.js'
 import { UserContext } from '../context/UserProvider.js'
 
-export default function Profile(){
+export default function Profile() {
     const {
         user: {
             username
@@ -20,11 +20,14 @@ export default function Profile(){
 
     return (
         <div>
-            <h1>Welcome {username}!</h1>
-            <h3>Add an issue</h3>
-            <IssueForm addIssue={addIssue}/>
-            <h3>Issues you've added</h3>
-            <IssueList issues={issues}/>
+            <div className='container bg-light py-3 my-3'>
+                <h1>Welcome {username}!</h1>
+                <p>Add an issue</p>
+                <IssueForm addIssue={addIssue} />
+            </div>
+
+            <h3 className='text-center'>Issues you've added</h3>
+            <IssueList issues={issues} />
         </div>
     )
 }
