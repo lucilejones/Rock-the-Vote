@@ -16,22 +16,13 @@ issueRouter.get("/", (req, res, next) => {
         })
 })
 
-// get all issues
-// issueRouter.get("/", (req, res, next) => {
-//     Issue.find((err, issues) => {
-//         if (err) {
-//             res.status(500)
-//             return next(err)
-//         }
-//         return res.status(200).send(issues)
-//     })
-// })
-
 // get issues by user id
 issueRouter.get("/user", (req, res, next) => {
     console.log(req.auth._id)
     // changed user to postedBy
-    Issue.find({ postedBy: req.auth._id }, (err, issues) => {
+    Issue.find({ postedBy: req.auth._id })
+        .populate("postedBy", "username")
+        .exec((err, issues) => {
         if (err) {
             res.status(500)
             return next(err)

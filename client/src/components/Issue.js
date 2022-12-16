@@ -12,6 +12,9 @@ export default function Issue(props) {
     console.log(postedBy.username, "test username")
 
     const { 
+        user: {
+            username
+        },
         deleteIssue,
         upvoteIssue,
         downvoteIssue,
@@ -57,11 +60,11 @@ export default function Issue(props) {
         <div className='issue'>
             <p className='display-5'>{title}</p>
             <p className='lead'>{description}</p>
-            {postedBy.username && <p>posted by: {postedBy.username}</p>}
+            {username !== postedBy.username && <p>posted by: {postedBy.username}</p>}
             <p> total votes: {totalVotes}</p>
             <button onClick={() => upvoteIssue(_id)} className="btn btn-info btn-sm m-1">Upvote</button>
             <button onClick={() => downvoteIssue(_id)} className="btn btn-info btn-sm m-1">Downvote</button>
-            {!postedBy.username && <button onClick={() => deleteIssue(_id)} className="btn btn-info btn-sm m-1">Delete</button>}
+            {username === postedBy.username && <button onClick={() => deleteIssue(_id)} className="btn btn-info btn-sm m-1">Delete</button>}
             {/* <CommentForm 
                 addComment={addComment}
                 _id={_id}
