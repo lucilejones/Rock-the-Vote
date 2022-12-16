@@ -4,7 +4,9 @@ import IssueList from './IssueList'
 import { UserContext } from '../context/UserProvider'
 
 export default function Public(){
-    const { issues, getAllIssues } = useContext(UserContext)
+    const { 
+        issues, 
+        getAllIssues } = useContext(UserContext)
 
     useEffect(() => {
         getAllIssues()

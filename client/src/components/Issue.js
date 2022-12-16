@@ -9,9 +9,13 @@ export default function Issue(props) {
     // console.log(comments)
 
     const { title, description, postedBy, upvotedBy, downvotedBy, _id } = props
-    // console.log(postedBy.username)
+    console.log(postedBy.username, "test username")
 
-    const { deleteIssue, upvoteIssue, downvoteIssue, userAxios } = useContext(UserContext)
+    const { 
+        deleteIssue,
+        upvoteIssue,
+        downvoteIssue,
+        userAxios } = useContext(UserContext)
     // took out comments, getCommentsByIssue
 
     const totalVotes = upvotedBy.length - downvotedBy.length
@@ -43,6 +47,7 @@ export default function Issue(props) {
 
     function deleteComment(commentId) {
         userAxios.delete(`/api/comment/${commentId}`)
+            .then(res => console.log(res))
             .then(res => setComments(prevComments => prevComments.filter(comment => comment._id !== commentId)))
             .catch(err => console.log(err.response.data.errMsg))
     }

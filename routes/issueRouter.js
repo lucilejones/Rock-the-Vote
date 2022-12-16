@@ -58,8 +58,8 @@ issueRouter.post("/", (req, res, next) => {
 // delete issue
 // issueRouter.delete("/:issueId", (req, res, next) => {
 //     Issue.findOneAndDelete(
-//         { _id: req.params.issueId, user: req.auth._id },
-//         // I think this stays as user, but if gets errors try postedBy
+//         { _id: req.params.issueId, postedBy: req.auth._id },
+//         // user or postedBy?
 //         (err, deletedIssue) => {
 //             if (err) {
 //                 res.status(500)
@@ -72,7 +72,7 @@ issueRouter.post("/", (req, res, next) => {
 
 // try?
 issueRouter.delete("/:issueId", (req, res, next) => {
-    Issue.deleteOne({ _id: req.params.issueId, user: req.auth._id},
+    Issue.deleteOne({ _id: req.params.issueId, postedBy: req.auth._id},
         (err, deletedIssue) => {
             if(err){
                 res.status(500)
@@ -85,7 +85,7 @@ issueRouter.delete("/:issueId", (req, res, next) => {
                         return next(err)
                     }
                 })
-            return res.status(200).send(`Successfully deleted Issue ${deletedIssue.title}`)
+            return res.status(200).send(`Successfully deleted Issue.`)
         })
 })
 
@@ -94,7 +94,7 @@ issueRouter.delete("/:issueId", (req, res, next) => {
 issueRouter.put("/:issueId", (req, res, next) => {
     Issue.findOneAndUpdate(
         { _id: req.params.issueId, user: req.auth._id },
-        // I think this stays as user, but if get errors try postedBy
+        // user or postedBy?
         req.body,
         { new: true },
         (err, updatedIssue) => {

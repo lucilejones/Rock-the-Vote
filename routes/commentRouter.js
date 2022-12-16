@@ -44,8 +44,8 @@ commentRouter.post("/:issueId", (req, res, next) => {
 // delete a comment
 commentRouter.delete("/:commentId", (req, res, next) => {
     Comment.findOneAndDelete(
-        {_id: req.params.commentId, user: req.auth._id},
-        // I think this stays as user, but if get errors change to commentedBy
+        {_id: req.params.commentId, commentedBy: req.auth._id},
+        // user or commentedBy
         (err, deletedComment) => {
             if(err){
                 res.status(500)
@@ -59,8 +59,8 @@ commentRouter.delete("/:commentId", (req, res, next) => {
 // update a comment
 commentRouter.put("/:commentId", (req, res, next) => {
     Comment.findOneAndUpdate(
-        {_id: req.params.commentId, user: req.auth._id},
-        // I think this stays as user, but if get errors try commentedBy
+        {_id: req.params.commentId, commentedBy: req.auth._id},
+        // user or commentedBy
         req.body,
         {new: true},
         (err, updatedComment) => {
