@@ -9,7 +9,7 @@ export default function Issue(props) {
     // console.log(comments)
 
     const { title, description, postedBy, upvotedBy, downvotedBy, _id } = props
-    console.log(postedBy.username, "test username")
+    // console.log(postedBy.username, "test username")
 
     const { 
         user: {

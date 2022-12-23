@@ -18,7 +18,7 @@ issueRouter.get("/", (req, res, next) => {
 
 // get issues by user id
 issueRouter.get("/user", (req, res, next) => {
-    console.log(req.auth._id)
+    // console.log(req.auth._id)
     // changed user to postedBy
     Issue.find({ postedBy: req.auth._id })
         .populate("postedBy", "username")
